@@ -43,6 +43,7 @@ brew 'node'
 brew 'redis'
 brew 'yarn'
 brew 'angular-cli'
+brew 'terminal-notifier'
 
 # Apps
 cask 'caffeine'
