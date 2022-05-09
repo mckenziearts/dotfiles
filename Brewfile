@@ -44,6 +44,7 @@ brew 'redis'
 brew 'yarn'
 brew 'angular-cli'
 brew 'terminal-notifier'
+brew 'watchman'
 
 # Apps
 cask 'caffeine'
