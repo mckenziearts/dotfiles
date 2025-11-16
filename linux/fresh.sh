@@ -1,39 +1,30 @@
 #!/bin/sh
 
 DOTFILES_DIR="$HOME/.dotfiles"
-MACOS_DIR="$DOTFILES_DIR/macos"
+LINUX_DIR="$DOTFILES_DIR/linux"
 
-echo "🚀 Setting up your Mac..."
+echo "🚀 Setting up your Linux system..."
 
-# Check if Xcode Command Line Tools are installed
-if ! xcode-select -p &>/dev/null; then
-  echo "Xcode Command Line Tools not found. Installing..."
-  xcode-select --install
-else
-  echo "Xcode Command Line Tools already installed."
-fi
-
-# Install Homebrew if we don't have it
-if test ! $(which brew); then
-  echo "📦 Installing Homebrew..."
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-  # Add Homebrew to PATH
-  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
-
-# Update Homebrew recipes
-echo "📦 Updating Homebrew..."
-brew update
+# Update package lists
+echo "📦 Updating package lists..."
+sudo apt update
 
 # Install Zsh and Oh My Zsh setup
 echo "🐚 Setting up Zsh and Oh My Zsh..."
+
+# Install Zsh if we don't have it
+if test ! $(which zsh); then
+  echo "Installing Zsh..."
+  sudo apt install -y zsh
+fi
 
 # Check for Oh My Zsh and install if we don't have it
 if test ! $(which omz); then
   echo "Installing Oh My Zsh..."
   /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/HEAD/tools/install.sh)" "" --unattended
+
+  # Set zsh as default shell
+  chsh -s $(which zsh)
 fi
 
 # Install Oh My Zsh plugins
@@ -69,7 +60,7 @@ ln -sf $HOME/.oh-my-zsh/custom/themes/spaceship-prompt $HOME/.dotfiles/themes/sp
 # Link .zshrc configuration
 echo "⚙️  Linking .zshrc configuration..."
 rm -rf $HOME/.zshrc
-ln -s $HOME/.dotfiles/macos/.zshrc $HOME/.zshrc
+ln -s $HOME/.dotfiles/linux/.zshrc $HOME/.zshrc
 
 echo "⚙️  Linking Git configuration..."
 [ -e $HOME/.gitconfig ] && rm $HOME/.gitconfig
@@ -77,25 +68,31 @@ echo "⚙️  Linking Git configuration..."
 ln -s $HOME/.dotfiles/config/git/.gitconfig $HOME/.gitconfig
 ln -s $HOME/.dotfiles/config/git/.gitignore_global $HOME/.gitignore_global
 
-# Install apps from Brewfile if it exists
-if [ -f "$MACOS_DIR/Brewfile" ]; then
-  echo "🛠️  Installing applications from Brewfile..."
-  brew tap homebrew/bundle
-  brew bundle --file="$MACOS_DIR/Brewfile"
+# Run installation scripts
+echo "🛠️  Installing applications from Linuxfile..."
+
+if [ -f "$LINUX_DIR/bin/binaries.sh" ]; then
+  echo "Installing system binaries..."
+  bash "$LINUX_DIR/bin/binaries.sh"
+fi
+
+if [ -f "$LINUX_DIR/bin/development.sh" ]; then
+  echo "Installing development tools..."
+  bash "$LINUX_DIR/bin/development.sh"
 fi
 
 # Create a Sites directory
-mkdir -p $HOME/Sites
+mkdir $HOME/Sites
 
 # Create sites subdirectories
-mkdir -p $HOME/Sites/ShopperLabs
-mkdir -p $HOME/Sites/Laravelcm
-mkdir -p $HOME/Sites/OSS
-mkdir -p $HOME/Sites/Projects
+mkdir $HOME/Sites/ShopperLabs
+mkdir $HOME/Sites/Laravelcm
+mkdir $HOME/Sites/OSS
+mkdir $HOME/Sites/Projects
 
 # Clone Github repositories
 $DOTFILES_DIR/clone.sh
 
 echo ""
-echo "✅ Fresh macOS setup completed!"
+echo "✅ Fresh Linux setup completed!"
 echo "💡 Please restart your terminal or run 'source ~/.zshrc' to apply changes."

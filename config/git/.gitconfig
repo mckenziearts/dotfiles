@@ -1,0 +1,11 @@
+[core]
+	excludesFile = ~/.gitignore_global
+	autocrlf = input
+	editor = vim
+[user]
+	name = "Arthur Monney"
+	email = monneylobe@gmail.com
+[fetch]
+	prune = true
+[init]
+	defaultBranch = main
