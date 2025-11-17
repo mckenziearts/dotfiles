@@ -21,7 +21,7 @@ This repository serves as my way to setup and maintain my development environmen
 
 1. Clone this repository:
    ```bash
-   git clone git@github.com:mckenziearts/dotfiles.git ~/.dotfiles
+   git clone https://github.com/mckenziearts/dotfiles.git ~/.dotfiles
    ```
 
 2. Run the installation:
@@ -34,24 +34,32 @@ This repository serves as my way to setup and maintain my development environmen
    source ~/.zshrc
    ```
 
-### macOS Setup
+### Mac Setup
 
-1. Generate SSH key (if needed):
-   ```bash
-   ~/.dotfiles/bin/ssh.sh "your-email@example.com"
+After backing up your old Mac you may now follow these install instructions to setup a new one.
+
+1. Update macOS to the latest version through system preferences
+2. Setup an SSH key by using one of the two following methods
+   2.1. If you use 1Password, install it with the 1Password [SSH agent](https://developer.1password.com/docs/ssh/get-started/#step-3-turn-on-the-1password-ssh-agent) and sync your SSH keys locally.
+   2.2. Otherwise [generate a new public and private SSH key](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) by running:
+
+   ```zsh
+   curl https://raw.githubusercontent.com/mckenziearts/dotfiles/HEAD/macos/bin/ssh.sh | sh -s "<your-email-address>"
    ```
 
-2. Clone this repository:
+3. Clone this repository to `~/.dotfiles` with:
    ```bash
-   git clone git@github.com:mckenziearts/dotfiles.git ~/.dotfiles
+   git clone --recursive git@github.com:mckenziearts/dotfiles.git ~/.dotfiles
    ```
 
-3. Run the installation:
+4. Run the installation:
    ```bash
    ~/.dotfiles/macos/fresh.sh
    ```
 
-4. Restart your terminal
+5. Start `Herd.app` and run its install process
+6. After mackup is synced with your cloud storage, restore preferences by running `mackup restore`
+7. Restart your computer to finalize the process
 
 ## Structure
 
@@ -90,7 +98,7 @@ This repository serves as my way to setup and maintain my development environmen
 - Development tools (see `linux/bin/development.sh`)
 - System binaries (see `linux/bin/binaries.sh`)
 
-### macOS
+### Mac
 
 - **Homebrew** package manager
 - **Zsh** and **Oh My Zsh**

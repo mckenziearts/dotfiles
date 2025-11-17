@@ -96,6 +96,12 @@ mkdir -p $HOME/Sites/Projects
 # Clone Github repositories
 $DOTFILES_DIR/clone.sh
 
+# Symlink the Mackup config file to the home directory
+ln -s $MACOS_DIR/.mackup.cfg $HOME/.mackup.cfg
+
+# Set macOS preferences - we will run this last because this will reload the shell
+source $MACOS_DIR/.macos
+
 echo ""
 echo "✅ Fresh macOS setup completed!"
 echo "💡 Please restart your terminal or run 'source ~/.zshrc' to apply changes."

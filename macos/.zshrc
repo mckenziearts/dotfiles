@@ -109,8 +109,14 @@ export LANG=en_US.UTF-8
 
 # Load NVM
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+# Herd injected PHP 8.4 configuration.
+export HERD_PHP_84_INI_SCAN_DIR="/Users/chretiendev/Library/Application Support/Herd/config/php/84/"
+
+# Herd injected PHP binary.
+export PATH="/Users/chretiendev/Library/Application Support/Herd/bin/":$PATH
 
 source $DOTFILES/aliases.zsh
 source $DOTFILES/macos/aliases.zsh
