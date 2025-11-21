@@ -7,5 +7,8 @@
 	email = monneylobe@gmail.com
 [fetch]
 	prune = true
+[push]
+    # Automatically set origin as the remote for current branch
+    autoSetupRemote = true
 [init]
 	defaultBranch = main
